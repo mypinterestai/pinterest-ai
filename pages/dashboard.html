@@ -1,18 +1,24 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
 
   <title>PinterestAI Dashboard</title>
 
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet"
+  href="../css/style.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect"
+  href="https://fonts.googleapis.com">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+  rel="stylesheet">
 
 </head>
 
@@ -28,24 +34,24 @@
         PinterestAI
       </div>
 
-     <div class="sidebar-links">
+      <div class="sidebar-links">
 
-  <a href="#"
-  onclick="switchTool('keyword')">
-  Keyword Research
-  </a>
+        <a href="#"
+        onclick="switchTool('keyword')">
+        Keyword Research
+        </a>
 
-  <a href="#"
-  onclick="switchTool('title')">
-  Title Generator
-  </a>
+        <a href="#"
+        onclick="switchTool('title')">
+        Title Generator
+        </a>
 
-  <a href="#"
-  onclick="switchTool('tags')">
-  Pinterest Tags
-  </a>
+        <a href="#"
+        onclick="switchTool('tags')">
+        Pinterest Tags
+        </a>
 
-</div>
+      </div>
 
     </aside>
 
@@ -65,45 +71,30 @@
 
       </div>
 
-      <!-- SEARCH -->
-
-      <div class="research-box">
-
-        <input
-        type="text"
-        id="keyword"
-        placeholder="Enter Pinterest keyword">
-
-        <button onclick="generateTitle()">
-          Analyze
-        </button>
-
-      </div>
-
-      <!-- RESULTS -->
+      <!-- DYNAMIC CONTENT -->
 
       <div id="dynamicContent">
 
-  <div class="tool-section">
+        <div class="tool-section">
 
-    <div class="research-box">
+          <div class="research-box">
 
-      <input
-      type="text"
-      id="keyword"
-      placeholder="Enter Pinterest keyword">
+            <input
+            type="text"
+            id="keyword"
+            placeholder="Enter Pinterest keyword">
 
-      <button onclick="generateKeywordResearch()">
-        Analyze
-      </button>
+            <button onclick="generateKeywordResearch()">
+              Analyze
+            </button>
 
-    </div>
+          </div>
 
-    <div id="results"></div>
+          <div id="results"></div>
 
-  </div>
+        </div>
 
-</div>
+      </div>
 
     </main>
 
