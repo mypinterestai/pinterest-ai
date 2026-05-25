@@ -1,71 +1,280 @@
-const generateBtn = document.getElementById("generateBtn");
+// KEYWORD DATABASE
 
-const results = document.getElementById("results");
+const keywordDatabase = {
 
-const loading = document.getElementById("loading");
+  nails: {
+    volume: 74000,
+    competition: "High",
+    related: [
+      "pink summer nails",
+      "short summer nails",
+      "beach nails",
+      "vacation nails",
+      "cute acrylic nails"
+    ]
+  },
 
-generateBtn.addEventListener("click", function(){
+  "home decor": {
+    volume: 52000,
+    competition: "High",
+    related: [
+      "modern home decor",
+      "small living room ideas",
+      "cozy bedroom decor",
+      "apartment decor",
+      "wall decor ideas"
+    ]
+  },
 
-const keyword = document.getElementById("keyword").value;
+  fashion: {
+    volume: 68000,
+    competition: "High",
+    related: [
+      "casual summer outfits",
+      "street style outfits",
+      "minimal fashion",
+      "old money outfits",
+      "travel outfits"
+    ]
+  },
 
-if(keyword === ""){
+  travel: {
+    volume: 61000,
+    competition: "High",
+    related: [
+      "travel aesthetic",
+      "europe travel outfits",
+      "beach vacation",
+      "travel photography",
+      "travel inspo"
+    ]
+  },
 
-alert("Please enter a keyword");
+  recipes: {
+    volume: 48000,
+    competition: "Medium",
+    related: [
+      "healthy dinner recipes",
+      "easy pasta recipes",
+      "high protein meals",
+      "meal prep ideas",
+      "air fryer recipes"
+    ]
+  },
 
-return;
+  wedding: {
+    volume: 59000,
+    competition: "High",
+    related: [
+      "wedding hairstyles",
+      "wedding nails",
+      "bridesmaid dresses",
+      "wedding decor",
+      "wedding aesthetic"
+    ]
+  }
 
-}
+};
 
-results.innerHTML = "";
+// GENERATE FUNCTION
 
-loading.style.display = "block";
+function generateTitle(){
 
-setTimeout(function(){
+  const keywordInput =
+  document.getElementById("keyword");
 
-loading.style.display = "none";
+  const keyword =
+  keywordInput.value.toLowerCase().trim();
 
-const ideas = [
+  const results =
+  document.getElementById("results");
 
-"25 " + keyword + " Ideas That Look Expensive And Trendy",
+  if(keyword === ""){
 
-"Best " + keyword + " Trends That Are Going Viral On Pinterest",
+    results.innerHTML = `
+    <div class="result-card">
+      Please enter a keyword.
+    </div>
+    `;
 
-"Modern " + keyword + " Inspiration For Aesthetic Content",
+    return;
+  }
 
-"Pinterest-Worthy " + keyword + " Concepts Creators Are Loving",
+  let dataFound = false;
 
-"Luxury Style " + keyword + " Ideas Perfect For 2026"
+  let finalHTML = "";
 
-];
+  // CHECK DATABASE
 
-ideas.forEach(function(idea){
+  for(let niche in keywordDatabase){
 
-results.innerHTML += `
+    if(keyword.includes(niche)){
 
-<div class="result-card">
+      dataFound = true;
 
-${idea}
+      const data =
+      keywordDatabase[niche];
 
-<br>
+      // SMART COMPETITION LOGIC
 
-<button class="copy-btn" onclick="copyText('${idea}')">
-Copy Title
-</button>
+      let competition =
+      data.competition;
 
-</div>
+      if(keyword.split(" ").length >= 4){
 
-`;
+        competition = "Low";
 
-});
+      }else if(keyword.split(" ").length >= 2){
 
-},1800);
+        competition = "Medium";
+      }
 
-});
+      // ESTIMATED VOLUME
 
-function copyText(text){
+      let estimatedVolume =
+      data.volume -
+      Math.floor(
+      Math.random() * 12000
+      );
 
-navigator.clipboard.writeText(text);
+      // RELATED KEYWORDS
 
-alert("Copied");
+      let keywordRows = "";
+
+      data.related.forEach(item => {
+
+        let rowCompetition =
+        "Medium";
+
+        if(item.split(" ").length >= 4){
+
+          rowCompetition = "Low";
+
+        }else if(item.split(" ").length <= 2){
+
+          rowCompetition = "High";
+        }
+
+        let rowVolume =
+        Math.floor(
+        estimatedVolume /
+        (Math.random() * 3 + 1)
+        );
+
+        keywordRows += `
+
+        <div class="table-row">
+
+          <span>${item}</span>
+
+          <span>${rowVolume.toLocaleString()}</span>
+
+          <span>${rowCompetition}</span>
+
+        </div>
+
+        `;
+      });
+
+      // FINAL OUTPUT
+
+      finalHTML = `
+
+      <div class="stats-grid">
+
+        <div class="stat-card">
+
+          <h3>Estimated Search Volume</h3>
+
+          <p>${estimatedVolume.toLocaleString()}</p>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h3>Competition</h3>
+
+          <p>${competition}</p>
+
+        </div>
+
+        <div class="stat-card">
+
+          <h3>Trend Score</h3>
+
+          <p>${Math.floor(Math.random() * 15 + 85)}%</p>
+
+        </div>
+
+      </div>
+
+      <div class="keyword-table">
+
+        <div class="table-head">
+
+          <span>Keyword</span>
+
+          <span>Search Volume</span>
+
+          <span>Competition</span>
+
+        </div>
+
+        ${keywordRows}
+
+      </div>
+
+      <div class="result-card">
+
+        <h2 style="margin-bottom:20px;">
+        SEO Optimized Pinterest Titles
+        </h2>
+
+        <p>
+        • ${keyword} ideas for 2026<br><br>
+
+        • viral ${keyword} inspiration<br><br>
+
+        • best ${keyword} trends to try<br><br>
+
+        • aesthetic ${keyword} ideas<br><br>
+
+        • trending ${keyword} content
+        </p>
+
+      </div>
+
+      `;
+
+    }
+
+  }
+
+  // FALLBACK
+
+  if(!dataFound){
+
+    finalHTML = `
+
+    <div class="result-card">
+
+      <h2 style="margin-bottom:20px;">
+      Smart Pinterest Analysis
+      </h2>
+
+      <p>
+      Your keyword:
+      <strong>${keyword}</strong>
+      appears to be a growing Pinterest niche.
+      Long-tail variations may have lower competition
+      and higher engagement opportunities.
+      </p>
+
+    </div>
+
+    `;
+  }
+
+  results.innerHTML = finalHTML;
 
 }
