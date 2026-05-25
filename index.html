@@ -2,157 +2,158 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Pinterest AI</title>
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="bg-blur blur1"></div>
-<div class="bg-blur blur2"></div>
+  <div class="bg-blur blur1"></div>
+  <div class="bg-blur blur2"></div>
 
-<header>
+  <!-- NAVBAR -->
 
-<div class="logo">
-Pinterest AI
-</div>
+  <header>
 
-<nav>
+    <div class="logo">
+      PinterestAI
+    </div>
 
-<a href="#">Features</a>
+    <nav>
 
-<a href="#">Pricing</a>
+      <a href="index.html">Home</a>
 
-<a href="#">Login</a>
+      <a href="pages/pricing.html">Pricing</a>
 
-<button>
-Get Started
-</button>
+      <a href="pages/login.html">Login</a>
 
-</nav>
+      <button>
+        Get Started
+      </button>
 
-</header>
+    </nav>
 
-<section class="hero">
+  </header>
 
-<div class="badge">
-AI Powered Pinterest Growth
-</div>
+  <!-- HERO -->
 
-<h1>
-Generate Viral Pinterest <span>Content</span> Instantly
-</h1>
+  <section class="hero">
 
-<p class="subtitle">
+    <div class="badge">
+      AI Powered Pinterest Growth Platform
+    </div>
 
-Create click-worthy Pinterest titles, ideas, and content angles with a modern AI workflow designed for creators.
+    <h1>
+      Generate <span>Viral Pinterest Content</span> Instantly
+    </h1>
 
-</p>
+    <p class="subtitle">
+      Powerful AI tools designed for Pinterest creators, bloggers,
+      affiliate marketers, and brands that want more traffic,
+      clicks, and viral reach.
+    </p>
 
-<div class="generator-box">
+    <div class="generator-box">
 
-<input
-type="text"
-id="keyword"
-placeholder="Enter Pinterest Keyword..."
->
+      <input type="text" id="keyword" placeholder="Enter your Pinterest keyword">
 
-<button id="generateBtn">
-Generate
-</button>
+      <button onclick="generateTitle()">
+        Generate
+      </button>
 
-</div>
+    </div>
 
-<div id="loading">
+    <div id="loading">
 
-<div class="loader"></div>
+      <div class="loader"></div>
 
-<p>
-Generating content...
-</p>
+      <p>Generating AI content...</p>
 
-</div>
+    </div>
 
-<div id="results"></div>
+    <div id="results"></div>
 
-</section>
+  </section>
 
-<section class="features">
+  <!-- FEATURES -->
 
-<h2>
-Top Features
-</h2>
+  <section class="features">
 
-<p class="feature-subtitle">
-Powerful AI tools designed to help creators grow faster on Pinterest.
-</p>
+    <h2>
+      Top Features
+    </h2>
 
-<div class="feature-grid">
+    <p class="feature-subtitle">
+      Advanced AI-powered tools built to help creators grow
+      faster on Pinterest with professional SEO-focused content.
+    </p>
 
-<div class="feature-card">
+    <div class="feature-grid">
 
-<div class="icon-circle">
-📈
-</div>
+      <div class="feature-card">
 
-<h3>
-Viral Title Generator
-</h3>
+        <div class="icon-circle">
+          📈
+        </div>
 
-<p>
-Generate high-click Pinterest titles optimized for trends and engagement.
-</p>
+        <h3>
+          Viral Title Generator
+        </h3>
 
-</div>
+        <p>
+          Generate click-worthy Pinterest titles optimized for
+          trends, engagement, and search visibility.
+        </p>
 
-<div class="feature-card">
+      </div>
 
-<div class="icon-circle">
-🎯
-</div>
+      <div class="feature-card">
 
-<h3>
-Keyword Inspiration
-</h3>
+        <div class="icon-circle">
+          🎯
+        </div>
 
-<p>
-Discover content ideas and keyword angles creators are actively searching for.
-</p>
+        <h3>
+          Pinterest SEO
+        </h3>
 
-</div>
+        <p>
+          Discover high-performing keyword angles and
+          Pinterest search opportunities instantly.
+        </p>
 
-<div class="feature-card">
+      </div>
 
-<div class="icon-circle">
-⚡
-</div>
+      <div class="feature-card">
 
-<h3>
-Fast AI Workflow
-</h3>
+        <div class="icon-circle">
+          ⚡
+        </div>
 
-<p>
-Instantly generate multiple Pinterest-ready ideas in seconds.
-</p>
+        <h3>
+          Fast AI Workflow
+        </h3>
 
-</div>
+        <p>
+          Generate multiple Pinterest-ready content ideas
+          within seconds using AI automation.
+        </p>
 
-</div>
+      </div>
 
-</section>
+    </div>
 
-<script src="script.js"></script>
+  </section>
+
+  <script src="js/script.js"></script>
 
 </body>
+
 </html>
