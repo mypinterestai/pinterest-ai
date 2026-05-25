@@ -28,21 +28,24 @@
         PinterestAI
       </div>
 
-      <div class="sidebar-links">
+     <div class="sidebar-links">
 
-        <a href="#">Dashboard</a>
+  <a href="#"
+  onclick="switchTool('keyword')">
+  Keyword Research
+  </a>
 
-        <a href="#">Keyword Research</a>
+  <a href="#"
+  onclick="switchTool('title')">
+  Title Generator
+  </a>
 
-        <a href="#">Title Generator</a>
+  <a href="#"
+  onclick="switchTool('tags')">
+  Pinterest Tags
+  </a>
 
-        <a href="#">Description AI</a>
-
-        <a href="#">Pinterest Tags</a>
-
-        <a href="#">Trend Finder</a>
-
-      </div>
+</div>
 
     </aside>
 
@@ -79,7 +82,28 @@
 
       <!-- RESULTS -->
 
-      <div id="results"></div>
+      <div id="dynamicContent">
+
+  <div class="tool-section">
+
+    <div class="research-box">
+
+      <input
+      type="text"
+      id="keyword"
+      placeholder="Enter Pinterest keyword">
+
+      <button onclick="generateKeywordResearch()">
+        Analyze
+      </button>
+
+    </div>
+
+    <div id="results"></div>
+
+  </div>
+
+</div>
 
     </main>
 

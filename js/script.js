@@ -1,90 +1,232 @@
-// KEYWORD DATABASE
 
-const keywordDatabase = {
+// =========================
+// SIDEBAR SYSTEM
+// =========================
 
-  nails: {
-    volume: 74000,
-    competition: "High",
-    related: [
-      "pink summer nails",
-      "short summer nails",
-      "beach nails",
-      "vacation nails",
-      "cute acrylic nails"
-    ]
-  },
+const toolContent = {
 
-  "home decor": {
-    volume: 52000,
-    competition: "High",
-    related: [
-      "modern home decor",
-      "small living room ideas",
-      "cozy bedroom decor",
-      "apartment decor",
-      "wall decor ideas"
-    ]
-  },
+  keyword: `
+  
+  <div class="tool-section">
 
-  fashion: {
-    volume: 68000,
-    competition: "High",
-    related: [
-      "casual summer outfits",
-      "street style outfits",
-      "minimal fashion",
-      "old money outfits",
-      "travel outfits"
-    ]
-  },
+    <div class="research-box">
 
-  travel: {
-    volume: 61000,
-    competition: "High",
-    related: [
-      "travel aesthetic",
-      "europe travel outfits",
-      "beach vacation",
-      "travel photography",
-      "travel inspo"
-    ]
-  },
+      <input
+      type="text"
+      id="keyword"
+      placeholder="Enter Pinterest keyword">
 
-  recipes: {
-    volume: 48000,
-    competition: "Medium",
-    related: [
-      "healthy dinner recipes",
-      "easy pasta recipes",
-      "high protein meals",
-      "meal prep ideas",
-      "air fryer recipes"
-    ]
-  },
+      <button onclick="generateKeywordResearch()">
+        Analyze
+      </button>
 
-  wedding: {
-    volume: 59000,
-    competition: "High",
-    related: [
-      "wedding hairstyles",
-      "wedding nails",
-      "bridesmaid dresses",
-      "wedding decor",
-      "wedding aesthetic"
-    ]
-  }
+    </div>
+
+    <div id="results"></div>
+
+  </div>
+
+  `,
+
+  title: `
+
+  <div class="tool-section">
+
+    <div class="research-box">
+
+      <input
+      type="text"
+      id="titleKeyword"
+      placeholder="Enter keyword for titles">
+
+      <button onclick="generateTitles()">
+        Generate
+      </button>
+
+    </div>
+
+    <div id="titleResults"></div>
+
+  </div>
+
+  `,
+
+  tags: `
+
+  <div class="tool-section">
+
+    <div class="research-box">
+
+      <input
+      type="text"
+      id="tagKeyword"
+      placeholder="Enter keyword for tags">
+
+      <button onclick="generateTags()">
+        Generate
+      </button>
+
+    </div>
+
+    <div id="tagResults"></div>
+
+  </div>
+
+  `
 
 };
 
-// MAIN FUNCTION
+// =========================
+// SWITCH TOOL
+// =========================
 
-function generateTitle(){
+function switchTool(tool){
 
-  const keywordInput =
-  document.getElementById("keyword");
+  const container =
+  document.getElementById("dynamicContent");
+
+  container.innerHTML =
+  toolContent[tool];
+
+}
+
+// =========================
+// KEYWORD DATABASE
+// =========================
+
+const keywordGroups = {
+
+  bedroom: [
+
+    "modern bedroom ideas",
+    "small bedroom ideas",
+    "cozy bedroom aesthetic",
+    "minimal bedroom decor",
+    "luxury bedroom inspiration",
+    "dark bedroom ideas",
+    "bedroom makeover",
+    "cute bedroom setup"
+
+  ],
+
+  nails: [
+
+    "pink summer nails",
+    "vacation nails",
+    "beach nails",
+    "almond nails",
+    "short summer nails",
+    "cute acrylic nails",
+    "bright tropical nails",
+    "summer nail inspiration"
+
+  ],
+
+  fashion: [
+
+    "old money outfits",
+    "casual summer outfits",
+    "minimal outfits",
+    "travel outfits",
+    "neutral outfits",
+    "european fashion style",
+    "street style outfits",
+    "classy outfit ideas"
+
+  ],
+
+  travel: [
+
+    "beach vacation",
+    "travel aesthetic",
+    "travel photography",
+    "europe travel ideas",
+    "summer travel outfits",
+    "vacation inspiration",
+    "tropical destinations",
+    "travel bucket list"
+
+  ],
+
+  recipes: [
+
+    "healthy dinner recipes",
+    "easy pasta recipes",
+    "high protein meals",
+    "air fryer recipes",
+    "meal prep ideas",
+    "healthy snacks",
+    "easy lunch ideas",
+    "low calorie meals"
+
+  ]
+
+};
+
+// =========================
+// DETECT CATEGORY
+// =========================
+
+function detectCategory(keyword){
+
+  keyword = keyword.toLowerCase();
+
+  if(
+    keyword.includes("bedroom") ||
+    keyword.includes("decor") ||
+    keyword.includes("room")
+  ){
+    return "bedroom";
+  }
+
+  if(
+    keyword.includes("nail") ||
+    keyword.includes("acrylic") ||
+    keyword.includes("manicure")
+  ){
+    return "nails";
+  }
+
+  if(
+    keyword.includes("fashion") ||
+    keyword.includes("outfit") ||
+    keyword.includes("style")
+  ){
+    return "fashion";
+  }
+
+  if(
+    keyword.includes("travel") ||
+    keyword.includes("vacation") ||
+    keyword.includes("trip")
+  ){
+    return "travel";
+  }
+
+  if(
+    keyword.includes("recipe") ||
+    keyword.includes("food") ||
+    keyword.includes("meal")
+  ){
+    return "recipes";
+  }
+
+  return null;
+
+}
+
+// =========================
+// GENERATE KEYWORD RESEARCH
+// =========================
+
+function generateKeywordResearch(){
 
   const keyword =
-  keywordInput.value.toLowerCase().trim();
+  document
+  .getElementById("keyword")
+  .value
+  .trim()
+  .toLowerCase();
 
   const results =
   document.getElementById("results");
@@ -94,7 +236,9 @@ function generateTitle(){
     results.innerHTML = `
 
     <div class="result-card">
+
       Please enter a keyword.
+
     </div>
 
     `;
@@ -102,249 +246,217 @@ function generateTitle(){
     return;
   }
 
-  let finalHTML = "";
+  const category =
+  detectCategory(keyword);
 
-  // SMART CATEGORY DETECTION
+  if(!category){
 
-  let detectedCategory = "";
+    results.innerHTML = `
 
-  if(
+    <div class="result-card">
 
-    keyword.includes("nail") ||
-    keyword.includes("acrylic") ||
-    keyword.includes("manicure")
+      <h2 style="margin-bottom:20px;">
+      No Strong Pinterest Match Found
+      </h2>
 
-  ){
+      <p>
+      Try keywords related to:
+      nails, bedroom decor,
+      fashion, travel, recipes,
+      beauty, or lifestyle niches.
+      </p>
 
-    detectedCategory = "nails";
+    </div>
+
+    `;
+
+    return;
   }
 
-  else if(
+  const relatedKeywords =
+  keywordGroups[category];
 
-    keyword.includes("home") ||
-    keyword.includes("bedroom") ||
-    keyword.includes("living room") ||
-    keyword.includes("decor") ||
-    keyword.includes("kitchen")
+  let keywordRows = "";
 
-  ){
-
-    detectedCategory = "home decor";
-  }
-
-  else if(
-
-    keyword.includes("fashion") ||
-    keyword.includes("outfit") ||
-    keyword.includes("clothes") ||
-    keyword.includes("style")
-
-  ){
-
-    detectedCategory = "fashion";
-  }
-
-  else if(
-
-    keyword.includes("travel") ||
-    keyword.includes("vacation") ||
-    keyword.includes("beach") ||
-    keyword.includes("trip")
-
-  ){
-
-    detectedCategory = "travel";
-  }
-
-  else if(
-
-    keyword.includes("recipe") ||
-    keyword.includes("meal") ||
-    keyword.includes("food")
-
-  ){
-
-    detectedCategory = "recipes";
-  }
-
-  else if(
-
-    keyword.includes("wedding") ||
-    keyword.includes("bride")
-
-  ){
-
-    detectedCategory = "wedding";
-  }
-
-  // IF CATEGORY FOUND
-
-  if(detectedCategory !== ""){
-
-    const data =
-    keywordDatabase[detectedCategory];
-
-    // SMART COMPETITION
+  relatedKeywords.forEach(item => {
 
     let competition =
-    data.competition;
+    "Medium";
 
-    if(keyword.split(" ").length >= 4){
+    if(item.split(" ").length <= 2){
+
+      competition = "High";
+    }
+
+    if(item.split(" ").length >= 4){
 
       competition = "Low";
     }
 
-    else if(keyword.split(" ").length >= 2){
-
-      competition = "Medium";
-    }
-
-    // ESTIMATED VOLUME
-
-    let estimatedVolume =
-    data.volume -
+    let volume =
     Math.floor(
-    Math.random() * 12000
+    Math.random() * 40000 + 3000
     );
 
-    // RELATED KEYWORDS
+    keywordRows += `
 
-    let keywordRows = "";
+    <div class="table-row">
 
-    data.related.forEach(item => {
+      <span>${item}</span>
 
-      let rowCompetition =
-      "Medium";
+      <span>${volume.toLocaleString()}</span>
 
-      if(item.split(" ").length >= 4){
-
-        rowCompetition = "Low";
-      }
-
-      else if(item.split(" ").length <= 2){
-
-        rowCompetition = "High";
-      }
-
-      let rowVolume =
-      Math.floor(
-      estimatedVolume /
-      (Math.random() * 3 + 1)
-      );
-
-      keywordRows += `
-
-      <div class="table-row">
-
-        <span>${item}</span>
-
-        <span>${rowVolume.toLocaleString()}</span>
-
-        <span>${rowCompetition}</span>
-
-      </div>
-
-      `;
-    });
-
-    // FINAL OUTPUT
-
-    finalHTML = `
-
-    <div class="stats-grid">
-
-      <div class="stat-card">
-
-        <h3>Estimated Search Volume</h3>
-
-        <p>${estimatedVolume.toLocaleString()}</p>
-
-      </div>
-
-      <div class="stat-card">
-
-        <h3>Competition</h3>
-
-        <p>${competition}</p>
-
-      </div>
-
-      <div class="stat-card">
-
-        <h3>Trend Score</h3>
-
-        <p>${Math.floor(Math.random() * 15 + 85)}%</p>
-
-      </div>
-
-    </div>
-
-    <div class="keyword-table">
-
-      <div class="table-head">
-
-        <span>Keyword</span>
-
-        <span>Search Volume</span>
-
-        <span>Competition</span>
-
-      </div>
-
-      ${keywordRows}
-
-    </div>
-
-    <div class="result-card">
-
-      <h2 style="margin-bottom:20px;">
-      SEO Optimized Pinterest Titles
-      </h2>
-
-      <p>
-
-      • ${keyword} ideas for 2026<br><br>
-
-      • viral ${keyword} inspiration<br><br>
-
-      • best ${keyword} trends to try<br><br>
-
-      • aesthetic ${keyword} ideas<br><br>
-
-      • trending ${keyword} content
-
-      </p>
+      <span>${competition}</span>
 
     </div>
 
     `;
-  }
+  });
 
-  else{
+  const trendScore =
+  Math.floor(
+  Math.random() * 15 + 85
+  );
 
-    finalHTML = `
+  const totalVolume =
+  Math.floor(
+  Math.random() * 70000 + 10000
+  );
 
-    <div class="result-card">
+  results.innerHTML = `
 
-      <h2 style="margin-bottom:20px;">
-      Smart Pinterest Analysis
-      </h2>
+  <div class="stats-grid">
 
-      <p>
+    <div class="stat-card">
 
-      Your keyword:
-      <strong>${keyword}</strong>
-      appears to be a growing Pinterest niche.
-      Long-tail variations may have lower competition
-      and higher engagement opportunities.
+      <h3>Estimated Search Volume</h3>
 
-      </p>
+      <p>${totalVolume.toLocaleString()}</p>
 
     </div>
 
-    `;
-  }
+    <div class="stat-card">
 
-  results.innerHTML = finalHTML;
+      <h3>Competition</h3>
+
+      <p>Medium</p>
+
+    </div>
+
+    <div class="stat-card">
+
+      <h3>Trend Score</h3>
+
+      <p>${trendScore}%</p>
+
+    </div>
+
+  </div>
+
+  <div class="keyword-table">
+
+    <div class="table-head">
+
+      <span>Keyword</span>
+
+      <span>Search Volume</span>
+
+      <span>Competition</span>
+
+    </div>
+
+    ${keywordRows}
+
+  </div>
+
+  `;
+
+}
+
+// =========================
+// TITLE GENERATOR
+// =========================
+
+function generateTitles(){
+
+  const keyword =
+  document
+  .getElementById("titleKeyword")
+  .value
+  .trim();
+
+  const results =
+  document
+  .getElementById("titleResults");
+
+  results.innerHTML = `
+
+  <div class="result-card">
+
+    <h2 style="margin-bottom:20px;">
+    Pinterest SEO Titles
+    </h2>
+
+    <p>
+
+    • ${keyword} ideas for 2026<br><br>
+
+    • viral ${keyword} inspiration<br><br>
+
+    • best ${keyword} trends to try<br><br>
+
+    • aesthetic ${keyword} ideas<br><br>
+
+    • trending ${keyword} content
+
+    </p>
+
+  </div>
+
+  `;
+
+}
+
+// =========================
+// TAG GENERATOR
+// =========================
+
+function generateTags(){
+
+  const keyword =
+  document
+  .getElementById("tagKeyword")
+  .value
+  .trim();
+
+  const results =
+  document
+  .getElementById("tagResults");
+
+  results.innerHTML = `
+
+  <div class="result-card">
+
+    <h2 style="margin-bottom:20px;">
+    Pinterest Tags
+    </h2>
+
+    <p>
+
+    #${keyword.replaceAll(" ","")}<br><br>
+
+    #pinterestideas<br><br>
+
+    #viralcontent<br><br>
+
+    #aestheticideas<br><br>
+
+    #trendingnow
+
+    </p>
+
+  </div>
+
+  `;
 
 }
