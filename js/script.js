@@ -106,175 +106,203 @@ function generateTitle(){
 
   // CHECK DATABASE
 
-  for(let niche in keywordDatabase){
+  // SMART CATEGORY DETECTION
 
-    if(keyword.includes(niche)){
+let detectedCategory = "";
 
-      dataFound = true;
+if(
+keyword.includes("nail") ||
+keyword.includes("acrylic") ||
+keyword.includes("manicure")
+){
 
-      const data =
-      keywordDatabase[niche];
+  detectedCategory = "nails";
+}
 
-      // SMART COMPETITION LOGIC
+else if(
 
-      let competition =
-      data.competition;
+keyword.includes("home") ||
+keyword.includes("bedroom") ||
+keyword.includes("living room") ||
+keyword.includes("decor") ||
+keyword.includes("kitchen")
 
-      if(keyword.split(" ").length >= 4){
+){
 
-        competition = "Low";
+  detectedCategory = "home decor";
+}
 
-      }else if(keyword.split(" ").length >= 2){
+else if(
 
-        competition = "Medium";
-      }
+keyword.includes("fashion") ||
+keyword.includes("outfit") ||
+keyword.includes("clothes") ||
+keyword.includes("style")
 
-      // ESTIMATED VOLUME
+){
 
-      let estimatedVolume =
-      data.volume -
-      Math.floor(
-      Math.random() * 12000
-      );
+  detectedCategory = "fashion";
+}
 
-      // RELATED KEYWORDS
+else if(
 
-      let keywordRows = "";
+keyword.includes("travel") ||
+keyword.includes("vacation") ||
+keyword.includes("beach") ||
+keyword.includes("trip")
 
-      data.related.forEach(item => {
+){
 
-        let rowCompetition =
-        "Medium";
+  detectedCategory = "travel";
+}
 
-        if(item.split(" ").length >= 4){
+else if(
 
-          rowCompetition = "Low";
+keyword.includes("recipe") ||
+keyword.includes("meal") ||
+keyword.includes("food")
 
-        }else if(item.split(" ").length <= 2){
+){
 
-          rowCompetition = "High";
-        }
+  detectedCategory = "recipes";
+}
 
-        let rowVolume =
-        Math.floor(
-        estimatedVolume /
-        (Math.random() * 3 + 1)
-        );
+else if(
 
-        keywordRows += `
+keyword.includes("wedding") ||
+keyword.includes("bride")
 
-        <div class="table-row">
+){
 
-          <span>${item}</span>
+  detectedCategory = "wedding";
+}
 
-          <span>${rowVolume.toLocaleString()}</span>
+// IF CATEGORY FOUND
 
-          <span>${rowCompetition}</span>
+if(detectedCategory !== ""){
 
-        </div>
+  const data =
+  keywordDatabase[detectedCategory];
 
-        `;
-      });
+  let competition =
+  data.competition;
 
-      // FINAL OUTPUT
+  if(keyword.split(" ").length >= 4){
 
-      finalHTML = `
+    competition = "Low";
 
-      <div class="stats-grid">
+  }else if(keyword.split(" ").length >= 2){
 
-        <div class="stat-card">
-
-          <h3>Estimated Search Volume</h3>
-
-          <p>${estimatedVolume.toLocaleString()}</p>
-
-        </div>
-
-        <div class="stat-card">
-
-          <h3>Competition</h3>
-
-          <p>${competition}</p>
-
-        </div>
-
-        <div class="stat-card">
-
-          <h3>Trend Score</h3>
-
-          <p>${Math.floor(Math.random() * 15 + 85)}%</p>
-
-        </div>
-
-      </div>
-
-      <div class="keyword-table">
-
-        <div class="table-head">
-
-          <span>Keyword</span>
-
-          <span>Search Volume</span>
-
-          <span>Competition</span>
-
-        </div>
-
-        ${keywordRows}
-
-      </div>
-
-      <div class="result-card">
-
-        <h2 style="margin-bottom:20px;">
-        SEO Optimized Pinterest Titles
-        </h2>
-
-        <p>
-        • ${keyword} ideas for 2026<br><br>
-
-        • viral ${keyword} inspiration<br><br>
-
-        • best ${keyword} trends to try<br><br>
-
-        • aesthetic ${keyword} ideas<br><br>
-
-        • trending ${keyword} content
-        </p>
-
-      </div>
-
-      `;
-
-    }
-
+    competition = "Medium";
   }
 
-  // FALLBACK
+  let estimatedVolume =
+  data.volume -
+  Math.floor(Math.random() * 12000);
 
-  if(!dataFound){
+  let keywordRows = "";
 
-    finalHTML = `
+  data.related.forEach(item => {
 
-    <div class="result-card">
+    let rowCompetition =
+    "Medium";
 
-      <h2 style="margin-bottom:20px;">
-      Smart Pinterest Analysis
-      </h2>
+    if(item.split(" ").length >= 4){
 
-      <p>
-      Your keyword:
-      <strong>${keyword}</strong>
-      appears to be a growing Pinterest niche.
-      Long-tail variations may have lower competition
-      and higher engagement opportunities.
-      </p>
+      rowCompetition = "Low";
+
+    }else if(item.split(" ").length <= 2){
+
+      rowCompetition = "High";
+    }
+
+    let rowVolume =
+    Math.floor(
+    estimatedVolume /
+    (Math.random() * 3 + 1)
+    );
+
+    keywordRows += `
+
+    <div class="table-row">
+
+      <span>${item}</span>
+
+      <span>${rowVolume.toLocaleString()}</span>
+
+      <span>${rowCompetition}</span>
 
     </div>
 
     `;
-  }
+  });
 
-  results.innerHTML = finalHTML;
+  finalHTML = `
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+
+      <h3>Estimated Search Volume</h3>
+
+      <p>${estimatedVolume.toLocaleString()}</p>
+
+    </div>
+
+    <div class="stat-card">
+
+      <h3>Competition</h3>
+
+      <p>${competition}</p>
+
+    </div>
+
+    <div class="stat-card">
+
+      <h3>Trend Score</h3>
+
+      <p>${Math.floor(Math.random() * 15 + 85)}%</p>
+
+    </div>
+
+  </div>
+
+  <div class="keyword-table">
+
+    <div class="table-head">
+
+      <span>Keyword</span>
+
+      <span>Search Volume</span>
+
+      <span>Competition</span>
+
+    </div>
+
+    ${keywordRows}
+
+  </div>
+
+  <div class="result-card">
+
+    <h2 style="margin-bottom:20px;">
+    SEO Optimized Pinterest Titles
+    </h2>
+
+    <p>
+    • ${keyword} ideas for 2026<br><br>
+
+    • viral ${keyword} inspiration<br><br>
+
+    • best ${keyword} trends to try<br><br>
+
+    • aesthetic ${keyword} ideas<br><br>
+
+    • trending ${keyword} content
+    </p>
+
+  </div>
+
+  `;
 
 }
